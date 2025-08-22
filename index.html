@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Location App</title>
+
+
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/location.css" />
+  <style>
+    body {
+      margin: 0;
+      padding-top: 40px;
+      font-family: Arial, sans-serif;
+      background-image: url("cl.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    h2 {
+      color: rgb(2, 2, 95);
+      font-size: 40px;
+      box-shadow: 0 0 10px;
+      border-radius: 10px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      color: white;
+    }
+
+    .location-info {
+      text-align: center;
+
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0px 59px rgba(0, 0, 0, 0.551);
+      color: black;
+      position: relative;
+      overflow: hidden;
+      width: 500px;
+      margin-top: 100px;
+    }
+
+    button {
+      background-color: rgb(68, 116, 227);
+      border: 0;
+      outline: 0;
+      width: 100px;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 7px;
+    }
+
+    button:hover {
+      background-color: black;
+      color: white;
+      box-shadow: 0 0 8px black;
+    }
+
+    .location-info::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(148, 169, 239, 0.4);
+      z-index: 0;
+      border-radius: 8px;
+    }
+
+    .location-info * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .location-info p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    p {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>Current Location</h2>
+    </div>
+
+    <div class="location-info">
+      <p id="latitude">Latitude: --</p>
+      <p id="longitude">Longitude: --</p>
+      <button class="btn btn-primary" id="getLocationButton">Get Location</button>
+    </div>
+  </div>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const getLocationButton = document.getElementById('getLocationButton');
+      const latitudeElement = document.getElementById('latitude');
+      const longitudeElement = document.getElementById('longitude');
+
+      getLocationButton.addEventListener('click', () => {
+        if (!navigator.geolocation) {
+          alert('Geolocation is not supported by your browser.');
+          return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            latitudeElement.textContent = `Latitude: ${latitude.toFixed(6)}`;
+            longitudeElement.textContent = `Longitude: ${longitude.toFixed(6)}`;
+          },
+          (error) => {
+            alert(`Error getting location: ${error.message}`);
+          }
+        );
+      });
+    });
+  </script>
+
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>
